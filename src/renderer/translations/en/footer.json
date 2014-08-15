@@ -1,0 +1,7 @@
+{
+  "build": "Build Environment",
+  "off": "Power Off",
+  "on": "Power On",
+  "update": "Update Vagrant Box",
+  "ssh": "Open Terminal"
+}

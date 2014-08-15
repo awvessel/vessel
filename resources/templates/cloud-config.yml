@@ -1,0 +1,95 @@
+#cloud-config
+coreos:
+  etcd:
+    discovery: <%- url %>
+    addr: $public_ipv4:4001
+    peer-addr: $public_ipv4:7001
+
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name: consul.service
+      command: start
+      content: |
+        [Unit]
+        Description=consul
+
+        [Service]
+        ExecStart=/opt/consul/bin/bootstrap.sh
+    - name: docker-tcp.socket
+      command: start
+      enable: true
+      content: |
+        [Unit]
+        Description=Docker Socket for the API
+
+        [Socket]
+        ListenStream=4243
+        Service=docker.service
+        BindIPv6Only=both
+
+        [Install]
+        WantedBy=sockets.target
+    - name: source.service
+      command: start
+      content: |
+        [Unit]
+        Description=Shared source directory from Vagrant
+        Requires=docker.service
+        Requires=mnt-source.mount
+
+        [Service]
+        Restart=no
+        ExecStart=/usr/bin/docker run -v /mnt/source:/opt/source:rw --name SOURCE busybox true
+
+  update:
+    reboot-strategy: off
+
+write_files:
+  - path: /etc/consul.d/server.json
+    permissions: 0644
+    content: |
+      {
+        "bootstrap": true,
+        "bind_addr": "$public_ipv4",
+        "client_addr": "$public_ipv4",
+        "data_dir": "/var/lib/consul",
+        "datacenter": "vagrant",
+        "log_level": "INFO",
+        "rejoin_after_leave": true,
+        "server": true,
+        "ui_dir": "/opt/consul/webui/dist"
+      }
+  - path: /opt/consul/bin/bootstrap.sh
+    permissions: 0755
+    content: |
+      #!/bin/bash
+      source /etc/environment
+      name=$(cat /etc/machine-id)
+
+      if [ ! -f /opt/consul/bin/consul ]; then
+        curl -o /tmp/consul.zip -L https://dl.bintray.com/mitchellh/consul/0.3.1_linux_amd64.zip
+        unzip /tmp/consul.zip -d /opt/consul/bin/
+        chmod +x /opt/consul/consul
+        curl -L -o /tmp/webui.zip https://dl.bintray.com/mitchellh/consul/0.3.1_web_ui.zip
+        mkdir /opt/consul/webui
+        unzip /tmp/webui.zip -d /opt/consul/webui/
+        rm /tmp/consul.zip /tmp/webui.zip
+      fi
+
+      flags=""
+
+      if etcdctl mk /consul.io/bootstrap/started true; then
+        flags="-bootstrap"
+      else
+        echo "This cluster has already been bootstrapped"
+        etcdctl set /consul.io/bootstrap/machines/${name} ${COREOS_PUBLIC_IPV4}
+        flags=$(etcdctl ls /consul.io/bootstrap/machines | while read line; do
+                ip=$(etcdctl get ${line})
+                echo ${flags} -join ${ip}
+        done)
+      fi
+
+      GOMAXPROCS=10 /opt/consul/bin/consul agent --config-dir=/etc/consul.d ${flags}

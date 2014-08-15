@@ -1,0 +1,7 @@
+.DS_Store
+binaries
+node_modules
+npm-debug.log
+*.zip
+resources/Info.plist
+.atom-shell

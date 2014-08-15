@@ -1,0 +1,7 @@
+{
+  "container:create": "The requested container could not be created:",
+  "container:start": "The requested container could not be started:",
+  "container:stop": "The requested container could not be stopped:",
+  "image:create": "The requested container's image could not be found.",
+  "vagrant:start": "An error occurred starting the Vagrant VM. Check the Logs tab for more information."
+}

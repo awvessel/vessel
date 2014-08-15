@@ -1,0 +1,9 @@
+{
+  "help-text": "Select the service containers you require for your development environment. Once selected, container dependencies will also be selected. Once a container is enabled, if there is a source repository associated with the container, a git clone button will appear. This button allows you to toggle whether building the environment will clone the repository into the Source directory.",
+  "applications": "Applications",
+  "services": "Low-Level",
+  "required": "Required",
+  "select-branch": "Select a branch",
+  "disable-git-clone": "Do not clone repo on build",
+  "enable-git-clone": "Clone repo on build"
+}

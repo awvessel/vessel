@@ -1,0 +1,8 @@
+{
+  "application": "Application",
+  "events": "Event Logs",
+  "vagrant": "Vagrant Logs",
+  "status": "Status",
+  "when": "When",
+  "port-forward": "Forwarding port <code>{from}</code> to <code>{to}</code>"
+}

@@ -1,0 +1,87 @@
+<div class="col-sm-5">
+  <form id="vagrant-settings" role="form">
+    <h4>{{settings}}</h4>
+    <div class="row">
+      <div class="form-group col-sm-5">
+        <label for="cpu_count">{{cpuCount}}</label>
+        <input type="number" class="form-control" name="cpu_count" data-bind="cpu_count">
+      </div>
+      <div class="col-sm-offset-1 col-sm-5">
+        <div class="form-group has-feedback">
+          <label for="ram">{{ram}}</label>
+          <input type="number" class="form-control" name="ram" data-bind="ram">
+          <span class="form-control-feedback">MB</span>
+        </div>
+      </div>
+    </div>
+    <div class="row" data-bind="network">
+      <h4>{{networkSettings}}</h4>
+      <div class="form-group col-sm-5">
+        <label for="ip">{{ipAddress}}</label>
+        <input type="text" class="form-control" data-target="network" name="ip" data-bind="ip">
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <label for="type">{{networkType}}</label>
+        <select data-bind="type" name="type" data-target="network" class="form-control">
+          <option value="private">{{private}}</option>
+          <option value="public">{{public}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <h4>{{providerSettings}}</h4>
+      <div class="form-group col-sm-5">
+        <label for="box">{{provider}}</label>
+        <select data-bind="provider" name="provider" class="form-control">
+          <option>virtualbox</option>
+          <option>vmware_fusion</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <label for="box">{{boxName}}</label>
+        <input type="text" class="form-control" name="box" data-bind="box">
+      </div>
+      <div data-bind="providers" class="col-sm-11">
+        <div class="form-group">
+          <label for="url" data-bind="name" data-target="providers"></label>
+          <input type="url" class="form-control" data-target="providers" data-bind="url">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="col-sm-7">
+  <h4>{{syncedFolders}}</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{{localPath}}</th>
+        <th>{{mountPoint}}</th>
+        <th>{{nfsOptions}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody data-bind="synced_folders">
+      <tr>
+        <td><a href="#open"><i class="fa fa-external-link"></i> <span data-bind="name"></span></a></td>
+        <td><code data-bind="mount"></code></td>
+        <td><code data-bind="options"></code></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <form id="synced-folder" role="form">
+        <tr>
+          <td><input type="directory" class="form-control" id="sf-name" placeholder="{{localPath}}"></td>
+          <td><input type="text" class="form-control" id="sf-mount" placeholder="{{mountPoint}}"></td>
+          <td><input type="text" class="form-control" id="sf-options" placeholder="nolock,vers=3,udp"></td>
+          <td>
+            <button class="btn btn-small btn-primary disabled" title="{{addSyncedFolder}}">
+              <i class="fa fa-plus-square"></i>
+            </button>
+          </td>
+        </tr>
+      </form>
+    </tfoot>
+  </table>
+</div>

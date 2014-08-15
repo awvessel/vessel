@@ -1,0 +1,9 @@
+{
+  "overview": "Overview",
+  "containers": "Containers",
+  "vagrant": "Vagrant Settings",
+  "preview": "Config Preview",
+  "logs": "Logs",
+  "title": "Vessel Environment: {path}",
+  "help": "Help"
+}

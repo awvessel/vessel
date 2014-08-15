@@ -1,0 +1,83 @@
+// Vessel specific weird overrides that dont fit in the other less files
+#containers {
+  table {
+    tbody {
+      tr {
+        td {
+          i {
+            font-size: 12pt;
+            vertical-align: middle;
+          }
+          input {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+span[data-bind="single"] {
+  padding-left: 0.5em;
+  font-size: @font-size-small;
+}
+
+.btn-xs {
+  .ossicon {
+    margin-top: -3px;
+  }
+}
+
+td.clone {
+  min-width: 44px;
+}
+
+#checkbox {
+  margin-top: 2px;
+}
+
+#docker-overview {
+  tbody {
+    tr {
+      td.remove {
+        width: 1em;
+      }
+    }
+  }
+}
+
+#top-bar {
+  i {
+    float: left;
+    font-size: 16pt;
+    padding-right: 7px;
+    margin-top: -3px;
+  }
+}
+
+.containers {
+  overflow-y: scroll;
+  height: 430px;
+}
+
+#status-dialog {
+  cursor: progress;
+  .panel {
+    background: @progress-bg;
+    margin-top: 1em;
+    margin-bottom: 0;
+    padding: .5em 1em;
+    height: 200px;
+    overflow-y: scroll;
+  }
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}

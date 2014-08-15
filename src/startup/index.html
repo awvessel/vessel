@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link href="../static/css/vessel.css" rel="stylesheet">
+    <script src="../startup/jquery.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <h1 class="text-error"><i class="fa fa-exclamation-circle"></i> Missing Manifest Repository</h1>
+      <p>Vessel requires a manifest git repository in order to work properly. Please enter the URL to a git repository in the form below and press &ldquo;Save URL&rdquo;</p>
+      <div class="alert alert-error hidden"><strong><i class="fa fa-exclamation-triangle"></i> ERROR</strong> You must enter a URL before pressing the Save button</div>
+      <form role="form">
+        <div class="form-group">
+          <label>Repository URL</label>
+          <input type="url" class="form-control" placeholder="Manifest URL">
+        </div>
+         <button type="submit" class="btn btn-error">Save URL</button>
+      </form>
+    </div>
+  </body>
+</html>

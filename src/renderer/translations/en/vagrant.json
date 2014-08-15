@@ -1,0 +1,18 @@
+{
+    "settings": "General Settings",
+    "provider": "Provider",
+    "boxName": "Box Name",
+    "cpuCount": "CPU Count",
+    "ram": "Memory",
+    "networkSettings": "Network Settings",
+    "networkType": "Network Type",
+    "private": "Private",
+    "public": "Public",
+    "ipAddress": "IP Address",
+    "syncedFolders": "Synced Folders",
+    "localPath": "Local Path",
+    "mountPoint": "VM Mount Point",
+    "nfsOptions": "NFS Options",
+    "addSynedFolder": "Add Synced Folder",
+    "providerSettings": "Provider Settings"
+}

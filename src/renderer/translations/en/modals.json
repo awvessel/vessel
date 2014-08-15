@@ -1,0 +1,13 @@
+{
+  "authFailed": "Authentication Failed",
+  "authRequired": "Authentication Required",
+  "authIntro": "Type your password to allow Vagrant to manage entries to the <code>/etc/exports</code> file for the synced folders.",
+  "authTryAgain": "Please try again",
+  "authUsername": "Username",
+  "authPassword": "Password",
+  "auth": "Authenticate",
+  "cancel": "Cancel",
+  "close": "Close",
+  "error": "Critical Error",
+  "percentComplete": "{percent}% Complete"
+}

@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-sm-6"><h4>{{applications}}</h4></div>
+  <div class="col-sm-6"><h4>{{services}}</h4></div>
+</div>
+<div class="row">
+  <div class="col-sm-6 containers">
+    <div class="scrollable">
+      <table class="table table-striped">
+        <tbody id="s-applications">
+          <tr data-bind="target">
+            <td class="col-sm-1">
+              <a data-bind="enabled" href="#checkbox" data-toggle="tooptip">
+                <i data-bind="toggle"></i>
+              </a>
+            </td>
+            <td class="col-sm-5" data-bind="name"></td>
+            <td class="clone" data-bind="repository">
+              <a data-bind="clone" href="#clone" data-toggle="tooltip">
+                <i class="ossicon ossicon-git"></i>
+              </a>
+            </td>
+            <td class="col-sm-5" data-bind="repository">
+              <span class="branch" data-bind="single"></span>
+              <select data-bind="branches" data-header="{{select-branch}}" class="selectpicker">
+                <option data-bind="branch"></option>
+              </select>
+            </td>
+            <td class="col-sm-1 text-center">
+              <i data-bind="icon"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-sm-6 containers">
+    <div class="scrollable">
+      <table class="table table-striped">
+        <tbody id="s-low-level">
+          <tr data-bind="target">
+            <td class="col-sm-1">
+              <a data-bind="enabled" href="#checkbox" data-toggle="tooltip">
+                <i data-bind="toggle"></i>
+              </a>
+            </td>
+            <td class="col-sm-5" data-bind="name"></td>
+            <td class="clone" data-bind="repository">
+              <a data-bind="clone" href="#clone" data-toggle="tooltip">
+                <i class="ossicon ossicon-git"></i>
+              </a>
+            </td>
+            <td class="col-sm-5" data-bind="repository">
+              <span class="branch" data-bind="single"></span>
+              <select data-bind="branches" data-header="{{select-branch}}" class="selectpicker">
+                <option data-bind="branch"></option>
+              </select>
+            </td>
+            <td class="col-sm-1 text-center">
+              <i data-bind="icon"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

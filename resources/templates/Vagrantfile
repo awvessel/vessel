@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+CLOUD_CONFIG_PATH = "./cloud-config.yml"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "<%- vagrant.box %>"
+  config.vm.hostname = "<%- vagrant.hostname %>"
+  config.vm.network :<%- vagrant.network.type %>_network, ip: "<%- vagrant.network.ip %>"
+
+  # Provider specific configuration <% _.each(vagrant.providers, function(provider) { %>
+  config.vm.provider :<%- provider.name %> do |<%- provider.name %>, override|
+    override.vm.box_url = "<%- provider.url %>"<%
+    if (provider.name == "virtualbox") { %>
+    virtualbox.check_guest_additions = false
+    virtualbox.memory = <%- vagrant.ram %>
+    virtualbox.cpus = <%- vagrant.cpu_count %><% }
+    if (provider.name == "vmware_fusion") {%>
+    vmware_fusion.vmx["memsize"] = <%- vagrant.ram %>
+    vmware_fusion.vmx["numvcpus"] = <%- vagrant.cpu_count %><%} %>
+  end
+  <% }); %>
+
+  # Plugin conflict resolution
+  if Vagrant.has_plugin?("vagrant-vbguest") then
+    config.vbguest.auto_update = false
+  end
+
+  # NFS shares<% _.each(vagrant.synced_folders, function(folder) { %>
+  config.vm.synced_folder "<%- folder.name %>", "<%- folder.mount %>",
+                          id: "<%- folder.name %>",
+                          :nfs => <%- folder.nfs %>,
+                          :mount_options => ['<%- folder.options %>']
+  <% }); %>
+  # CoreOS startup
+  config.vm.provision :file,
+    :source => "#{CLOUD_CONFIG_PATH}",
+    :destination => "/tmp/vagrantfile-user-data"
+  config.vm.provision :shell,
+    :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/",
+    :privileged => true
+end

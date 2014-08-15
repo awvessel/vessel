@@ -1,0 +1,20 @@
+{
+  "category": "Category",
+  "container-ipaddr": "IP Address",
+  "container-status": "Status",
+  "control": "Control",
+  "docker-headline": "Containers",
+  "duration": "Uptime:",
+  "ipaddr": "IP Address:",
+  "provider": "Provider:",
+  "status": "Status:",
+  "name": "Name",
+  "ports": "Ports",
+  "uptime": "Uptime",
+  "start": "Start container",
+  "resume": "Resume container",
+  "stop": "Pause container",
+  "create": "Create container",
+  "remove": "Remove container",
+  "consul": "Open the Consul Web UI"
+}

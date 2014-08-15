@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+  <div class="panel-body row" id="top-bar">
+    <div class="col-sm-3" data-bind="status">
+      <i class="ossicon ossicon-vagrant"></i><strong>{{status}}</strong> <span data-bind="state"></span>
+    </div>
+    <div class="col-sm-3" data-bind="config">
+      <strong>{{provider}}</strong> <span data-bind="vagrant.provider"></span>
+    </div>
+    <div class="col-sm-3" data-bind="config">
+      <strong>{{ipaddr}}</strong> <span data-bind="span.vagrant.network.ip">-</span>
+    </div>
+    <div class="col-sm-3" data-bind="status">
+      <strong>{{duration}}</strong> <span data-bind="duration">-</span>
+      <a href="#consul" data-original-title="{{consul}}" data-toggle="tooltip" data-placement="left" class="pull-right">
+        <i class="ossicon ossicon-consul"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h3>{{docker-headline}}</h3>
+    <table class="table table-striped" id="docker-overview">
+      <thead>
+        <tr>
+          <th>{{name}}</th>
+          <th></th>
+          <th>{{container-ipaddr}}</th>
+          <th>{{ports}}</th>
+          <th>{{container-status}}</th>
+          <th>{{uptime}}</th>
+          <th class="text-center">{{control}}</th>
+        </tr>
+      </thead>
+      <tbody data-bind="containers">
+        <tr>
+          <td class="col-sm-2" data-bind="name"></td>
+          <td class="col-sm-1 text-center"><i data-bind="icon"></i></td>
+          <td class="col-sm-2"><code data-bind="ipaddr"></code></td>
+          <td class="col-sm-2" data-bind="ports">
+            <code data-bind="port"></code>
+          </td>
+          <td class="col-sm-2" data-bind="status"></td>
+          <td class="col-sm-2" data-bind="uptime"></td>
+          <td class="col-sm-1 text-center">
+            <a data-bind="toggle" data-toggle="tooltip" data-original-title="" href="#toggle"><i data-bind="control"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

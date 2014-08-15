@@ -1,0 +1,69 @@
+
+<div class="modal" id="status-dialog" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <span class="pull-right text-muted" style="margin-top: .5em;" id="state-timer"></span>
+        <h3>
+          <i class="fa fa-cog fa-spin text-muted"></i>
+          <span data-bind="status">Running</span>
+        </h3>
+        <div>
+          <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+              <span class="sr-only">0% Complete</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default" id="status-logs">
+          <div class="panel-body" id="status-log-entries">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="auth-dialog" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form role="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">{{authRequired}}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{authIntro}}</p>
+          <div class="alert alert-error hidden">
+            <strong><i class="fa fa-exclamation-triangle"></i> {{authFailed}}</strong> {{authTryAgain}}
+          </div>
+          <div class="form-group">
+            <label for="username">{{authUsername}}</label>
+            <input type="email" id="username" class="form-control" readonly data-bind="username">
+          </div>
+          <div class="form-group">
+            <label for="password">{{authPassword}}</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{cancel}}</button>
+          <button type="submit" class="btn btn-primary">{{auth}}</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+<div class="modal" id="error-dialog" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title text-error"><i class="fa fa-exclamation-triangle"></i> {{error}}</h3>
+      </div>
+      <div class="modal-body"><span data-bind="error"></span> <strong data-bind="message"></strong></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-error" data-dismiss="modal">{{close}}</button>
+      </div>
+    </div>
+  </div>
+</div>
