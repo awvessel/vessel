@@ -18,7 +18,6 @@ define (require, exports, module) ->
       dns:               null
       enabled:           false
       env:               null
-      expose:            false
       icon:              null
       image:             null
       hostname:          null
