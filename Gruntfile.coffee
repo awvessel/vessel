@@ -12,6 +12,16 @@ gruntFunction = (grunt) ->
 
     pkg: grunt.file.readJSON 'package.json'
 
+    checkDependencies:
+      this: {}
+
+    devUpdate:
+      main:
+        options:
+          updateType: 'prompt'
+          reportUpdated: false
+          semver: true
+
     clean:
       app: appDir
       css: "#{resourcesDir}/*.css"
@@ -56,7 +66,7 @@ gruntFunction = (grunt) ->
         ]
 
     'download-atom-shell':
-      version: '0.15.5'
+      version: '0.18.1'
       outputDir: '.atom-shell'
 
     less:
@@ -122,19 +132,21 @@ gruntFunction = (grunt) ->
                 'src/renderer/**']
         tasks: ['coffeelint', 'copy', 'restart']
 
+  grunt.loadNpmTasks 'grunt-check-dependencies'
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-dev-update'
   grunt.loadNpmTasks 'grunt-download-atom-shell'
   grunt.loadNpmTasks 'grunt-npm-install'
   grunt.loadNpmTasks 'grunt-shell-spawn'
   grunt.loadNpmTasks 'grunt-template'
 
   grunt.registerTask 'default', ['compile']
-  grunt.registerTask 'setup',   ['download-atom-shell','shell:prep']
+  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'download-atom-shell','shell:prep']
   grunt.registerTask 'lint',    ['coffeelint:app']
   grunt.registerTask 'compile', ['lint', 'coffee', 'less', 'template', 'copy']
   grunt.registerTask 'build',   ['setup', 'compile', 'shell:dist']
