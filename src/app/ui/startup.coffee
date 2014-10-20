@@ -4,10 +4,12 @@ BrowserWindow = require 'browser-window'
 exec          = require('child_process').exec
 fs            = require 'fs-plus'
 ipc           = require 'ipc'
+semver        = require 'semver'
 yaml          = require 'js-yaml'
 
 class Startup
 
+  minVer: '1.6.0'
   url: 'https://github-enterprise.colo.lair/gavinr/vessel-manifest.git'
 
   constructor: ->
@@ -21,6 +23,40 @@ class Startup
     if not @_hasConfigDir()
       @_makeConfigDir()
 
+    # Ensure that Vagrant is 1.6.0 or higher
+    @_checkVagrantVersion(callback)
+
+  _checkVagrantVersion: (callback) ->
+    command = "vagrant --version"
+    exec command, (err, stdout, stderr) =>
+      if err
+        @_onVagrantCheckError 'I could not find the Vagrant application. ' +
+                              'Please ensure that Vagrant is installed and ' +
+                              'is in the global PATH.'
+      else
+        version = stdout.split(' ')[1]
+        if semver.gte version, @minVer
+          @_onVagrantCheckOk(callback)
+        else
+          @_onVagrantCheckError 'The Vagrant version I found is not ' +
+                                'supported. Version ' + version +
+                                ' was found but ' + @minVer +
+                                ' or greater is required.'
+
+  _onVagrantCheckError: (message) ->
+    @window = new BrowserWindow {
+      width: 600
+      height: 290
+      resizable: false
+      title: "Vessel Startup Error"
+      show: true
+    }
+    @window.loadUrl "file://#{__dirname}/../startup/error.html##{message}"
+    @window.on 'closed', () =>
+      @window = null
+
+  _onVagrantCheckOk: (callback) ->
+    # Ensure that there is a global manifest
     if not @_hasManifestDir()
       @_createPromptWindow()
     else

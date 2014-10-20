@@ -68,5 +68,8 @@ class Application
       app.dock.cancelBounce id
       event.returnValue = true
 
+    ipc.on 'app:quit', (event) ->
+      app.quit()
+
 # Create the new application
 new Application()
