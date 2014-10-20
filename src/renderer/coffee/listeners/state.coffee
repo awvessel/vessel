@@ -156,15 +156,6 @@ define (require, exports, module) ->
             @single_action = null
             Backbone.trigger 'modal:status:hide'
 
-    onScriptsCopyComplete: ->
-      Backbone.trigger 'modal:status:step'
-      Backbone.trigger 'docker:start'
-
-    onSSHConfigCreated: ->
-      Backbone.trigger 'modal:status:step'
-      Backbone.trigger 'modal:status:hideLogs',
-      Backbone.trigger 'vagrant:scripts:copy'
-
     onVagrantHalt: =>
       @_stopRefreshTimer()
       # If the password is set, assume it's corrent and start the build
@@ -251,9 +242,9 @@ define (require, exports, module) ->
               @_deferreds.images.resolve()
               @_deferreds.vagrant.resolve()
         when 'vagrant:starting'
-          @_setState 'configuring-ssh'
+          Backbone.trigger 'modal:status:hideLogs'
           Backbone.trigger 'modal:status:step'
-          Backbone.trigger 'vagrant:ssh-config'
+          Backbone.trigger 'docker:start'
         when 'vagrant:updating'
           @_setState 'updated'
           Backbone.trigger 'modal:status:hide'

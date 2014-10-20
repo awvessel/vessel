@@ -12,7 +12,7 @@ define (require, exports, module) ->
   #
   class Build extends Listener
 
-    nonContainerSteps: 3
+    nonContainerSteps: 2
 
     events:
       'environment:build':  'onBuild'
@@ -27,18 +27,13 @@ define (require, exports, module) ->
         if not result
           console.error "Error generating vagrantfile"
         @_stepComplete()
-        @_installScripts (result) =>
-          if not result
-            console.error "Error installing scripts"
-          @_stepComplete()
-          @_cloneSource () ->
-            console.log "Cloned"
-            Backbone.trigger 'environment:build:complete'
+        @_cloneSource () ->
+          console.log "Cloned"
+          Backbone.trigger 'environment:build:complete'
 
     onCloudConfigBuild: (url) =>
       console.log "Fetching new etcd discovery URL"
       ipc.send 'etcd:url:fetch', (url) =>
-        console.debug "Received URL: #{url}"
         @config.etcd.set 'url', url
         @_generateCloudConfig url, (result) ->
           console.log "Cloud config generated"
@@ -63,10 +58,8 @@ define (require, exports, module) ->
             path = "#{basePath}/#{repository.get('name')}"
             branch = repository.get 'branch'
             console.debug "Git clone: #{url}, #{path}, #{branch}"
-
             deferreds[path] = $.Deferred()
             promises.push deferreds[path].promise()
-
             ipc.send 'git:clone', url, path, branch, (path, response) =>
               if response.result is false
                 if not response.output.indexOf 'already exists'
@@ -82,24 +75,15 @@ define (require, exports, module) ->
           callback()
 
     _generateCloudConfig: (url, callback) ->
-      console.log "Generating cloud-config: #{url}"
       Backbone.trigger 'application:status', 'generate-cloudconfig'
-      ipc.send 'cloudconfig:generate'
-      , environment.path, url, false, (result) ->
-        console.log "Heard back from generate: #{result}"
-        callback(result)
+      ipc.send 'cloudconfig:generate', environment.path, url, false,
+        (result) ->
+          callback(result)
 
     _generateVagrantfile: (callback) ->
       Backbone.trigger 'application:status', 'generate-vagrantfile'
       ipc.send 'vagrantfile:generate', @config.model.toJSON()
       , environment.path, false, (result) ->
-        callback(result)
-
-    _installScripts: (callback) ->
-      Backbone.trigger 'application:status', 'installing-scripts'
-      # @todo: actually copy any scripts in that are required
-      ipc.send 'directory:ensure', "#{environment.path}/scripts", (result) ->
-        console.log "Path ensured"
         callback(result)
 
     _stepComplete: ->

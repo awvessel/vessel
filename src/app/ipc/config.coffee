@@ -19,8 +19,6 @@ class Config extends Listener
     'cloudconfig:generate': 'generateCloudConfig'
     'directory:ensure':     'ensureDirectory'
     'etcd:url:fetch':       'fetchEtcdTokenURL'
-    'scripts:copy':         'copyScripts'
-    'sshconfig:generate':   'generateSSHConfig'
     'username:fetch':       'fetchUsername'
     'password:validate':    'validatePassword'
     'vagrantfile:generate': 'generateVagrantfile'
@@ -59,39 +57,6 @@ class Config extends Listener
     else
       fs.writeFile "#{path}/cloud-config.yml", value, 'utf8', (err) ->
         event.sender.send callback, (if err? then false else true)
-
-  copyScripts: (event, path, callback) ->
-    files = fs.readdirSync("#{__dirname}/../scripts")
-    for file in files
-      src = "#{__dirname}/../scripts/#{file}"
-      dest = "#{path}/scripts/#{file}"
-      fs.createReadStream(src).pipe(fs.createWriteStream(dest))
-      fs.chmodSync dest, '0755'
-    event.sender.send callback, true
-
-  generateSSHConfig: (event, vagrant, ssh, callback) ->
-    path = "/home/#{vagrant.user}/.ssh"
-    SSH.exec vagrant, ["mkdir -p #{path}"], (result) ->
-      Logger.info "[config] Made #{path}"
-      SSH.exec vagrant, ["chmod 700 #{path}"], (result) ->
-        Logger.info "[config] Fixed permissions on #{path}"
-        SSH.scp vagrant
-        , "#{__dirname}/../templates/ssh_config", "#{path}/config"
-        , (result) ->
-          Logger.info "[config] Created #{path}/config"
-          tmp = tempWrite.sync ssh.key.private
-          SSH.scp vagrant, tmp, "#{path}/id_rsa", (result) ->
-            Logger.info "[config] Created #{path}"
-            fs.unlinkSync tmp
-            SSH.exec vagrant, ["chmod 600 #{path}/id_rsa"]
-            , (result) ->
-              Logger.info "[config] Fixed permissions on #{path}/id_rsa"
-              tmp = tempWrite.sync ssh.key.public
-              SSH.scp vagrant, tmp, "#{path}/id_rsa.pub"
-              , (result) ->
-                fs.unlinkSync tmp
-                Logger.info "[config] Created #{path}/id_rsa.pub"
-                event.sender.send callback, true
 
   generateVagrantfile: (event, values, path, preview, callback) ->
     templatePath = fs.realpathSync "#{__dirname}/../templates/Vagrantfile"
