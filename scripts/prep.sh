@@ -4,7 +4,7 @@ rm -rf binaries
 mkdir binaries
 
 echo "Extracting Atom-Shell to binaries dir"
-unzip -q .atom-shell/atom-shell.zip -d binaries/
+cp -r .atom-shell/Atom.app binaries/
 
 echo "Copying Atom.app to Vessel.app"
 cp -R binaries/Atom.app binaries/Vessel.app
