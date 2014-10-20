@@ -47,12 +47,6 @@ define (require, exports, module) ->
       ipc.send 'vagrant:ssh', environment.path, (result) ->
         console.log 'ssh'
 
-    sshConfig: =>
-      Backbone.trigger 'application:status', 'configuring-ssh'
-      ipc.send 'sshconfig:generate', @model.toJSON(), @config.ssh.toJSON()
-      , (result) ->
-        Backbone.trigger 'vagrant:ssh-config:complete'
-
     status: (callback) =>
       @model.fetch () ->
         if callback?

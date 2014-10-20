@@ -10,7 +10,6 @@ tempWrite = require 'temp-write'
 
 Listener  = require './base'
 Logger    = require '../utils/logger'
-SSH       = require '../utils/ssh'
 
 
 class Config extends Listener

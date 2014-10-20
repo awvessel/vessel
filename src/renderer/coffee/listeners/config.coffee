@@ -31,7 +31,6 @@ define (require, exports, module) ->
       @containers = @model.get 'containers'
       @docker     = @model.get 'docker'
       @etcd       = @model.get 'etcd'
-      @ssh        = @model.get 'ssh'
       @vagrant    = @model.get 'vagrant'
 
       # Listen for changes in the containers
@@ -71,7 +70,6 @@ define (require, exports, module) ->
       # Send the IPC request to load either the global or local manifest
       ipc.send "manifest:load", environment.path, (manifest) =>
         @docker.set manifest.docker
-        @ssh.set manifest.ssh
         @vagrant.set manifest.vagrant
         if not @vagrant.get('provider')?
           ipc.send 'vagrant:default_provider', (response) =>

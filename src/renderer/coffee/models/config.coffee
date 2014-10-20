@@ -5,7 +5,6 @@ define (require, exports, module) ->
   Containers = require 'cs!collections/config/containers'
   Docker     = require 'cs!models/config/docker'
   Etcd       = require 'cs!models/config/etcd'
-  SSH        = require 'cs!models/config/ssh'
   Vagrant    = require 'cs!models/config/vagrant'
 
   Config = Model.extend
@@ -15,7 +14,6 @@ define (require, exports, module) ->
       docker: Docker
       etcd: Etcd
       password: null
-      ssh: SSH
       vagrant: Vagrant
 
   Config

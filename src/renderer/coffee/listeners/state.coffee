@@ -28,14 +28,11 @@ define (require, exports, module) ->
       'vagrant:request:halt':           'onVagrantHalt'
       'vagrant:request:update':         'onVagrantUpdate'
       'vagrant:request:up':             'onVagrantUp'
-      'vagrant:ssh-config:complete':    'onSSHConfigCreated'
-      'vagrant:scripts:copy:complete':  'onScriptsCopyComplete'
       'vagrant:up:error':               'onVagrantUpError'
 
     vagrantSteps: [
       'Bringing machine'
       'Importing base box'
-      'SSH username'
       'Machine booted and ready!'
       'Configuring and enabling network'
       'Exporting NFS shared folders'
