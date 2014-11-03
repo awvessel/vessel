@@ -157,7 +157,7 @@ define (require, exports, module) ->
         config.Dns = container.get 'dns'
       if container.get 'env'
         config.Env = container.get 'env'
-      if not env?
+      else
         config.Env = []
 
       # Add the server IP
