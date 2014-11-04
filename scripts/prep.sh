@@ -4,10 +4,10 @@ rm -rf binaries
 mkdir binaries
 
 echo "Extracting Atom-Shell to binaries dir"
-cp -r .atom-shell/Atom.app binaries/
+cp -R .atom-shell/Atom.app binaries/.
 
-echo "Copying Atom.app to Vessel.app"
-cp -R binaries/Atom.app binaries/Vessel.app
+echo "Move Atom.app to Vessel.app"
+mv binaries/Atom.app binaries/Vessel.app
 
 echo "Renaming Atom to Vessel"
 mv binaries/Vessel.app/Contents/MacOS/Atom binaries/Vessel.app/Contents/MacOS/Vessel
