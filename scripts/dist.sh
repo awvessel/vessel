@@ -14,4 +14,4 @@ then
 fi
 
 echo "Creating zipfile"
-zip $ZIPFILE Vessel.app
+zip -r -9 $ZIPFILE Vessel.app

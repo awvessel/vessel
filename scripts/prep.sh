@@ -19,4 +19,4 @@ echo "Making app dir"
 mkdir -p ./binaries/Vessel.app/Contents/Resources/app
 
 echo "Removing dependency logfile"
-rm node_modules/moment/sauce_connect.log
+rm -f node_modules/moment/sauce_connect.log
