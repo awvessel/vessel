@@ -47,6 +47,11 @@ coreos:
 
 write_files:
 
+  - path: /etc/systemd/system/docker.service.d/50-insecure-registry.conf
+    content: |
+        [Service]
+        Environment=DOCKER_OPTS='--insecure-registry="10.0.0.0/8"'
+
   - path: /etc/consul.d/server.json
     permissions: 0644
     content: |

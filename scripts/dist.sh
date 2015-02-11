@@ -1,6 +1,6 @@
 #!/bin/bash
 CPATH=`pwd`
-ZIPFILE=../vessel-$1.tbz2
+ZIPFILE=../vessel-$1.zip
 
 echo "Installing dependencies"
 cd binaries/Vessel.app/Contents/Resources/app
@@ -14,4 +14,4 @@ then
 fi
 
 echo "Creating zipfile"
-tar cvfj $ZIPFILE Vessel.app
+zip $ZIPFILE Vessel.app

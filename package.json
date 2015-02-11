@@ -1,7 +1,7 @@
 {
     "name": "vessel",
     "productName": "Vessel",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Docker Based Development Workflow Management",
     "author": "Gavin M. Roy",
     "license": "BSD",

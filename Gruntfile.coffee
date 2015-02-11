@@ -66,7 +66,7 @@ gruntFunction = (grunt) ->
         ]
 
     'download-atom-shell':
-      version: '0.18.1'
+      version: '0.21.2'
       outputDir: '.atom-shell'
 
     less:
