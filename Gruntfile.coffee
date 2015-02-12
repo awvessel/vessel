@@ -1,4 +1,11 @@
+os = require 'os'
+path = require 'path'
+
 gruntFunction = (grunt) ->
+
+  pkg = grunt.file.readJSON 'package.json'
+
+  buildDir = path.join(os.tmpdir(), 'vessel-build')
 
   binDir = 'binaries/Vessel.app'
   contentsDir = "#{binDir}/Contents"
@@ -10,7 +17,7 @@ gruntFunction = (grunt) ->
 
   grunt.initConfig
 
-    pkg: grunt.file.readJSON 'package.json'
+    pkg: pkg
 
     checkDependencies:
       this: {}
@@ -65,9 +72,12 @@ gruntFunction = (grunt) ->
           {expand: true, src: 'resources/vessel.css', dest: cssDir, flatten: true, filter: 'isFile'}
         ]
 
-    'download-atom-shell':
-      version: '0.21.2'
-      outputDir: '.atom-shell'
+    'build-atom-shell':
+      tag: 'v0.21.2'
+      targetDir: './binaries'
+      buildDir: buildDir,
+      projectName: 'vessel'
+      productName: 'Vessel'
 
     less:
       development:
@@ -140,16 +150,17 @@ gruntFunction = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-dev-update'
-  grunt.loadNpmTasks 'grunt-download-atom-shell'
+  grunt.loadNpmTasks 'grunt-build-atom-shell'
   grunt.loadNpmTasks 'grunt-npm-install'
   grunt.loadNpmTasks 'grunt-shell-spawn'
   grunt.loadNpmTasks 'grunt-template'
 
   grunt.registerTask 'default', ['compile']
-  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'download-atom-shell','shell:prep']
+  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'build-atom-shell', 'prep']
   grunt.registerTask 'lint',    ['coffeelint:app']
   grunt.registerTask 'compile', ['lint', 'coffee', 'less', 'template', 'copy']
   grunt.registerTask 'build',   ['setup', 'compile', 'shell:dist']
+  grunt.registerTask 'dist',    ['compile', 'shell:dist']
   grunt.registerTask 'run',     ['shell:run']
 
 module.exports = gruntFunction
