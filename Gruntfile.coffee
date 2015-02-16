@@ -5,8 +5,6 @@ gruntFunction = (grunt) ->
 
   pkg = grunt.file.readJSON 'package.json'
 
-  buildDir = path.join(os.tmpdir(), 'vessel-build')
-
   binDir = 'binaries/Vessel.app'
   contentsDir = "#{binDir}/Contents"
   resourcesDir = "#{contentsDir}/Resources"
@@ -75,7 +73,7 @@ gruntFunction = (grunt) ->
     'build-atom-shell':
       tag: 'v0.21.2'
       targetDir: './binaries'
-      buildDir: buildDir,
+      buildDir: './build',
       projectName: 'vessel'
       productName: 'Vessel'
 
@@ -156,7 +154,7 @@ gruntFunction = (grunt) ->
   grunt.loadNpmTasks 'grunt-template'
 
   grunt.registerTask 'default', ['compile']
-  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'build-atom-shell', 'prep']
+  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'build-atom-shell', 'shell:prep']
   grunt.registerTask 'lint',    ['coffeelint:app']
   grunt.registerTask 'compile', ['lint', 'coffee', 'less', 'template', 'copy']
   grunt.registerTask 'build',   ['setup', 'compile', 'shell:dist']
