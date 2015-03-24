@@ -29,6 +29,7 @@ gruntFunction = (grunt) ->
 
     clean:
       app: appDir
+      build: './build'
       css: "#{resourcesDir}/*.css"
       fonts: "#{appDir}/static/fonts"
       icon: "#{resourcesDir}/*.icns"
@@ -71,7 +72,7 @@ gruntFunction = (grunt) ->
         ]
 
     'build-atom-shell':
-      tag: 'v0.21.2'
+      tag: 'v0.22.2'
       targetDir: './binaries'
       buildDir: './build',
       projectName: 'vessel'
@@ -86,14 +87,8 @@ gruntFunction = (grunt) ->
           'resources/vessel.css': 'src/less/bootstrap.less'
 
     shell:
-      prep:
-        command: 'scripts/prep.sh'
-        options:
-          stdout: true
-          stderr: true
-          failOnError: true
       dist:
-        command: "scripts/dist.sh <%= pkg.version %>"
+        command: "./scripts/dist.sh <%= pkg.version %>"
         options:
           stdout: true
           stderr: true
@@ -154,10 +149,9 @@ gruntFunction = (grunt) ->
   grunt.loadNpmTasks 'grunt-template'
 
   grunt.registerTask 'default', ['compile']
-  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'build-atom-shell', 'shell:prep']
+  grunt.registerTask 'setup',   ['checkDependencies', 'devUpdate', 'clean:dist', 'build-atom-shell']
   grunt.registerTask 'lint',    ['coffeelint:app']
   grunt.registerTask 'compile', ['lint', 'coffee', 'less', 'template', 'copy']
-  grunt.registerTask 'build',   ['setup', 'compile', 'shell:dist']
   grunt.registerTask 'dist',    ['compile', 'shell:dist']
   grunt.registerTask 'run',     ['shell:run']
 
