@@ -4,3 +4,4 @@ exclude_paths:
     - lib/*
     - resources/*
     - scripts/*
+    - src/renderer/require.js
