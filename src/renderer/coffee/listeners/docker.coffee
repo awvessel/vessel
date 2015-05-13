@@ -178,6 +178,13 @@ define (require, exports, module) ->
       if ports
         config.ExposedPorts = ports
 
+      containerVolumes = container.get 'volumes'
+      volumes = {}
+      for volume in containerVolumes
+        volumes[volume] = {}
+      if volumes
+        config.Volumes = volumes
+
       if not @images.getByTag config.Image
         @_containerImageCreate config.Image, (response) =>
           if response is true
