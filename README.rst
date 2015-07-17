@@ -7,9 +7,9 @@ using Vagrant and Docker.
 
 Development
 -----------
-To get started, make sure you have npm && grunt-cli installed.
+To get started, make sure you have npm and grunt-cli installed.
 
-.. code: bash
+.. code-block:: bash
 
   # Install the dependencies
   npm install
@@ -25,7 +25,7 @@ Distribution
 To create a distributable app that has all of the required dependencies, use the
 `grunt build` job:
 
-.. code: bash
+.. code:: bash
 
     grunt build
 
